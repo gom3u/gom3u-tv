@@ -1,0 +1,9 @@
+[
+  {"id": "cat-all", "name": "All Channels", "icon": "bi-grid-fill"},
+  {"id": "cat-news", "name": "News", "icon": "bi-newspaper"},
+  {"id": "cat-sports", "name": "Sports", "icon": "bi-trophy-fill"},
+  {"id": "cat-movies", "name": "Movies", "icon": "bi-film"},
+  {"id": "cat-doc", "name": "Documentary", "icon": "bi-globe-americas"},
+  {"id": "cat-kids", "name": "Kids", "icon": "bi-emoji-smile-fill"},
+  {"id": "cat-music", "name": "Music", "icon": "bi-music-note-beamed"}
+]
