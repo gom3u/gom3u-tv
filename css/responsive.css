@@ -1,0 +1,35 @@
+@media (max-width: 992px) {
+  .app-header {
+    padding: 10px 16px;
+  }
+  .main-content {
+    padding: 16px;
+  }
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .nav-links {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .header-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  .card-banner {
+    height: 80px;
+  }
+}
