@@ -1,0 +1,8 @@
+{
+  "maintenance_mode": false,
+  "auto_play": true,
+  "default_volume": 80,
+  "reload_interval_seconds": 30,
+  "stream_timeout_seconds": 10,
+  "enable_analytics": false
+}
