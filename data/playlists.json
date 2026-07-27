@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pl-01",
+    "name": "Primary World Streams",
+    "description": "High-availability global satellite feeds.",
+    "version": "1.4.2",
+    "last_updated": "2026-07-27T10:00:00Z",
+    "channel_source": "/data/channels.json",
+    "status": "active"
+  },
+  {
+    "id": "pl-02",
+    "name": "Backup Mirror List",
+    "description": "Secondary stream sources for redundancy.",
+    "version": "1.0.0",
+    "last_updated": "2026-07-20T08:00:00Z",
+    "channel_source": "/data/channels_backup.json",
+    "status": "inactive"
+  }
+]
