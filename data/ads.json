@@ -1,0 +1,14 @@
+{
+  "banner": {
+    "enabled": true,
+    "image_url": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80",
+    "target_url": "#",
+    "alt_text": "Premium Ultra HD Smart TV Display - Upgrade Experience"
+  },
+  "popup": {
+    "enabled": false,
+    "title": "Special Stream Event",
+    "message": "Tune in to Channel 2 for the live championship final starting at 20:00 UTC.",
+    "button_text": "Watch Now"
+  }
+}
