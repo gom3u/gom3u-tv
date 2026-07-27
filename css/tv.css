@@ -1,0 +1,19 @@
+/* D-Pad Focus Styling for Android TV / Smart TV Web Browsers */
+:focus-visible,
+.focusable:focus,
+.focusable.focused {
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 4px !important;
+  border-radius: 8px;
+  transform: scale(1.04) !important;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6) !important;
+  z-index: 100;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.tv-mode .nav-btn:focus,
+body.tv-mode .channel-card:focus,
+body.tv-mode .control-btn:focus {
+  background: var(--primary) !important;
+  color: #000 !important;
+}
