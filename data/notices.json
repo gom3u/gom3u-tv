@@ -1,0 +1,15 @@
+[
+  {
+    "id": "n-101",
+    "type": "ticker",
+    "message": "Welcome to GoM3U TV Live TV Web Player. Smooth streams active across all global servers.",
+    "active": true
+  },
+  {
+    "id": "n-102",
+    "type": "popup",
+    "title": "Scheduled Server Synchronization",
+    "message": "Routine EPG catalog maintenance occurs at 02:00 AM UTC. Playback will remain uninterrupted.",
+    "active": false
+  }
+]
