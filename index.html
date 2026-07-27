@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GoM3U TV – Live TV Web Player</title>
+  
+  <!-- Manifest & PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#00E5FF">
+  
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <!-- HLS.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  <link rel="stylesheet" href="./css/tv.css">
+</head>
+<body>
+
+  <!-- Maintenance Mode Overlay -->
+  <div id="maintenance-overlay" class="maintenance-overlay" style="display: none;">
+    <i class="bi bi-tools" style="font-size: 3rem; color: var(--primary); margin-bottom: 16px;"></i>
+    <h2>System Maintenance Active</h2>
+    <p style="color: var(--text-muted); margin-top: 8px;">GoM3U TV channels are updating. Streaming will resume shortly.</p>
+  </div>
+
+  <!-- Announcement Ticker -->
+  <div id="notice-ticker" class="ticker-wrap" style="display: none;">
+    <div id="notice-ticker-content" class="ticker-move"></div>
+  </div>
+
+  <!-- Header Navigation Bar -->
+  <header class="app-header">
+    <div class="brand-container">
+      <img id="app-brand-logo" class="brand-logo" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&auto=format&fit=crop&q=80" alt="GoM3U TV Logo">
+      <span id="app-brand-title" class="brand-title">GoM3U TV</span>
+    </div>
+
+    <nav>
+      <ul class="nav-links">
+        <li><button id="nav-btn-home" class="nav-btn nav-link-btn active focusable" onclick="App.switchTab('home')"><i class="bi bi-house-door-fill"></i> Home</button></li>
+        <li><button id="nav-btn-channels" class="nav-btn nav-link-btn focusable" onclick="App.switchTab('channels')"><i class="bi bi-tv-fill"></i> Channels</button></li>
+        <li><button id="nav-btn-favorites" class="nav-btn nav-link-btn focusable" onclick="App.switchTab('favorites')"><i class="bi bi-heart-fill"></i> Favorites</button></li>
+        <li><button id="nav-btn-history" class="nav-btn nav-link-btn focusable" onclick="App.switchTab('history')"><i class="bi bi-clock-history"></i> History</button></li>
+      </ul>
+    </nav>
+
+    <div class="header-status">
+      <div class="status-badge">
+        <span id="net-status-dot" class="status-dot"></span>
+        <span id="net-status-text">ONLINE</span>
+      </div>
+      <span id="header-clock">00:00 AM</span>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-content">
+    
+    <!-- External Dynamic Ad Banner Slot -->
+    <div id="ad-banner-container" class="ad-banner-container">
+      <img id="ad-banner-img" src="" alt="Advertisement">
+    </div>
+
+    <!-- Search & Category Filters -->
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; align-items: center; justify-content: space-between;">
+      <div id="category-pills" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;"></div>
+      
+      <div style="position: relative; width: 280px;">
+        <i class="bi bi-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+        <input id="app-search-input" class="focusable" type="text" placeholder="Search channels, genres..." 
+               style="width: 100%; background: var(--surface); border: 1px solid var(--surface-border); padding: 10px 12px 10px 36px; border-radius: 10px; color: #fff;">
+      </div>
+    </div>
+
+    <!-- Tab Pages -->
+    <div id="tab-home" class="tab-pane active"></div>
+    <div id="tab-channels" class="tab-pane"></div>
+    <div id="tab-favorites" class="tab-pane"></div>
+    <div id="tab-history" class="tab-pane"></div>
+
+  </main>
+
+  <!-- Fullscreen Cinema Video Player Modal -->
+  <div id="player-modal" class="player-modal">
+    <div id="player-stage" class="player-stage">
+      <video id="main-video-element" playsinline></video>
+
+      <div class="player-controls-overlay">
+        <div class="player-top-bar">
+          <div class="player-channel-meta">
+            <img id="player-channel-logo" class="player-logo" src="" alt="Channel Logo">
+            <div>
+              <h3 id="player-channel-title" style="color: #fff; font-size: 1.1rem;">Channel Title</h3>
+              <p id="player-channel-group" style="color: var(--text-muted); font-size: 0.85rem;">Category</p>
+            </div>
+          </div>
+          <button class="control-btn focusable" onclick="VideoPlayer.close()"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="player-center-controls">
+          <button class="control-btn focusable" onclick="VideoPlayer.previous()"><i class="bi bi-skip-start-fill"></i></button>
+          <button class="control-btn focusable" style="width: 64px; height: 64px; font-size: 1.6rem;" onclick="VideoPlayer.togglePlay()"><i class="bi bi-play-fill"></i></button>
+          <button class="control-btn focusable" onclick="VideoPlayer.next()"><i class="bi bi-skip-end-fill"></i></button>
+        </div>
+
+        <div class="player-bottom-bar">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="slider-group">
+              <i class="bi bi-volume-up-fill"></i>
+              <input type="range" min="0" max="1" step="0.1" value="0.8" class="focusable" oninput="VideoPlayer.videoEl.volume = this.value">
+            </div>
+            <button class="control-btn focusable" style="width: 38px; height: 38px; font-size: 1rem;" onclick="VideoPlayer.toggleFullscreen()"><i class="bi bi-arrows-fullscreen"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Modules -->
+  <script src="./js/utils.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/theme.js"></script>
+  <script src="./js/notice.js"></script>
+  <script src="./js/ads.js"></script>
+  <script src="./js/favorite.js"></script>
+  <script src="./js/history.js"></script>
+  <script src="./js/search.js"></script>
+  <script src="./js/settings.js"></script>
+  <script src="./js/navigation.js"></script>
+  <script src="./js/player.js"></script>
+  <script src="./js/app.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(reg => console.log('[PWA] ServiceWorker registered with scope:', reg.scope))
+          .catch(err => console.warn('[PWA] ServiceWorker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
